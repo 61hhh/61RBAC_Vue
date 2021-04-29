@@ -12,12 +12,12 @@
 
         <div class="header-right">
           <el-dropdown>
+
             <span class="el-dropdown-link">
-                <el-avatar style="float: left"> {{username}} </el-avatar>
-                <i class="el-icon-arrow-down el-icon--right" style="padding-top: 20px"></i>
+              <img src="../assets/img/user02.jpg" class="userImg">
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="personal">个人中心{{username}}</el-dropdown-item>
+              <el-dropdown-item @click.native="personal">{{username}}的个人中心</el-dropdown-item>
               <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -48,7 +48,7 @@
 
 <script>
   import LayoutMenu from './layout/LayoutMenu'
-  import {getTokenUser, setJwtToken} from '@/lib/utils'
+  import {getJwtToken, getTokenUser, setJwtToken} from '@/lib/utils'
 
   export default {
     name: 'home',
@@ -122,10 +122,6 @@
       flex: 1;
       text-align: right;
       align-self: center;
-      .el-avatar {
-        color: #1F9FFF;
-        background-color: #ffffff;
-      }
     }
   }
   .el-header {
@@ -135,6 +131,12 @@
       color: #FFFFFF;
       line-height: 60px;
     }
+  }
+
+  .userImg{
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
   }
 
   .el-aside {

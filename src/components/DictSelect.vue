@@ -2,7 +2,7 @@
     <el-select v-model="myVModel"
                :value="myVModel"
                :placeholder="placeholder">
-      <el-option v-for="option in this.$store.state.system.sysdict"
+      <el-option v-for="(option,index) in this.$store.state.system.sysdict" :key="index"
                  v-if="option.groupCode === groupCode"
                  :label="option.itemName"
                  :value="option.itemValue"/>

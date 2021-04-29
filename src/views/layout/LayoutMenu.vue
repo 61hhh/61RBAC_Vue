@@ -6,7 +6,7 @@
 
         <div class="menu-top">
           <img src="../../assets/logo.png" style="height: 60px;">
-          <div class="sys-name">DongBB系统</div>
+          <div class="sys-name">61RBAC系统</div>
         </div>
         <template v-for="menu in menuList">
             <el-submenu  :index="menu.id" :key="menu.id" v-if="!menu.hidden">
