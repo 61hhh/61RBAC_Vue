@@ -7,46 +7,56 @@
       <el-breadcrumb-item>内容编辑</el-breadcrumb-item>
     </el-breadcrumb>
 
-<!--    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">-->
-<!--      <el-form-item label="标题" prop="title">-->
-<!--        <el-input v-model="ruleForm.name"></el-input>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="摘要" prop="desc">-->
-<!--        <el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
-<!--      </el-form-item>-->
-<!--      &lt;!&ndash; mavon-editor &ndash;&gt;-->
-<!--      <el-form-item label="内容" prop="content" >-->
-<!--        <mavon-editor v-model="ruleForm.content"-->
-<!--                      style="height: 100%" ref=md-->
-<!--                      font-size="16px" class="edit-content">-->
-<!--        </mavon-editor>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item>-->
-<!--        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>-->
-<!--        <el-button @click="resetForm('ruleForm')">重置</el-button>-->
-<!--      </el-form-item>-->
-<!--    </el-form>-->
-    <h2>内容编辑</h2>
+    <el-form :model="contentForm" :rules="contentFormRules" ref="contentForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="contentForm.title"></el-input>
+      </el-form-item>
+      <el-form-item label="摘要" prop="abstraction">
+        <el-input type="textarea" v-model="contentForm.abstraction"></el-input>
+      </el-form-item>
+      <!-- mavon-editor -->
+      <div style="height: 500px">
+        <el-form-item label="内容" prop="content">
+          <mavon-editor v-model="contentForm.content"
+                        style="height: 100%" ref=md
+                        font-size="16px" class="edit-content">
+          </mavon-editor>
+        </el-form-item>
+      </div>
+      <el-form-item>
+        <el-button type="primary" @click="submitContentForm">立即创建</el-button>
+        <el-button @click="resetForm('contentForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
 
 
   </div>
 </template>
 
 <script>
+import {addContent} from "@/api/business/biz_content";
+
 export default {
   data() {
     return {
       ruleForm: {
         title: '',
-        desc: '',
+        abstraction: '',
         content: ''
       },
-      rules: {
-        name: [
+      contentRefName: "contentForm",
+      contentForm: {
+        title: '',
+        abstraction: '',
+        content: '',
+        author: ''
+      },
+      contentFormRules: {
+        title: [
           {required: true, message: '请输入标题名称', trigger: 'blur'},
           {min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur'}
         ],
-        desc: [
+        abstraction: [
           {required: true, message: '请填写文章摘要', trigger: 'blur'}
         ],
         content: [
@@ -56,16 +66,34 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitContentForm() {
+      this.$refs[this.contentRefName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.$confirm("确定发布内容吗?")
+              .then(_ => {
+                this.addData();
+                //取消新增或修改也要重置表单
+              }).catch(err => {
+            this.handleCloseDialog();
+          });
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
     },
+    addData() {
+      // getUserInfo().then(res=>{
+      //   console.log(res.data.username)
+      //   this.setAuthor(res.data.username)
+      // })
+      addContent(this.contentForm).then(res => {
+        this.$message({message: res.data, type: 'success'});
+        this.$refs[this.contentRefName].resetFields();
+      })
+    },
+    // setAuthor(authorName){
+    //   this.contentForm.author = authorName;
+    // },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
@@ -74,10 +102,11 @@ export default {
 </script>
 
 <style scoped>
-.content-main{
+.content-main {
   text-align: center;
 }
-.edit-content{
+
+.edit-content {
   height: 600px;
 }
 </style>
