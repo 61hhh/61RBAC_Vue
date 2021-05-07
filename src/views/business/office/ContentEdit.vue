@@ -15,10 +15,10 @@
         <el-input type="textarea" v-model="contentForm.abstraction"></el-input>
       </el-form-item>
       <!-- mavon-editor -->
-      <div style="height: 500px">
+      <div style="height: 610px">
         <el-form-item label="内容" prop="content">
           <mavon-editor v-model="contentForm.content"
-                        style="height: 100%" ref=md
+                        style="height: 600px" ref=md
                         font-size="16px" class="edit-content">
           </mavon-editor>
         </el-form-item>
@@ -73,6 +73,7 @@ export default {
               .then(_ => {
                 this.addData();
                 //取消新增或修改也要重置表单
+                this.$router.push('/home/content/list');
               }).catch(err => {
             this.handleCloseDialog();
           });

@@ -80,7 +80,7 @@ import MixinCUD from '@/components/MixinCUD'
 import {deleteContent, getAllContent, getQueryContent, updateContent} from "@/api/business/biz_content";
 
 export default {
-  name: "SystemDict",
+  name: "ContentList",
   mixins: [MixinCUD],
   data() {
     return {
