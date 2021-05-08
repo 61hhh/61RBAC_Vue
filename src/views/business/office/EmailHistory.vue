@@ -37,7 +37,12 @@
       <el-table :data="tableData" border default-expand-all stripe style="width: 100%;margin-bottom: 20px;">
         <el-table-column prop="address" label="收件人" width="300" align="center"/>
         <el-table-column prop="title" label="标题" width="300" align="center"/>
-        <el-table-column prop="content" label="内容" width="" align="center"/>
+        <el-table-column  label="内容" width="" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" icon="el-icon-message" @click="CheckMail(scope.$index, scope.row,'修改文章信息')">
+              查看内容</el-button>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="发布时间" width="200" align="center"/>
         <el-table-column label="管理" width="200" align="center">
           <template slot-scope="scope">
@@ -47,6 +52,25 @@
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 查看邮件内容 -->
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
+      <el-form :model="dialogForm" ref="dialogForm" label-width="100px">
+        <el-form-item label="邮件标题" prop="title">
+          <el-input v-model="dialogForm.title" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="邮件内容" prop="content">
+          <el-input v-model="dialogForm.content" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+        <el-form-item label="发件人" prop="createBy">
+          <el-input v-model="dialogForm.createBy" autocomplete="off" :disabled="true"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog" size="mini" type="primary">确 定</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -64,6 +88,12 @@ export default {
       queryFormRefName: "queryForm",
       queryForm: {
         titleLike: ""
+      },
+      dialogTitle:'',
+      dialogFormVisible: false,
+      dialogForm:{
+        title: '',
+        content:'',
       }
     }
   },
@@ -96,6 +126,15 @@ export default {
         console.log(res.data)
         console.log(this.tableData)
       }
+    },
+    CheckMail(index, row,dialogTitle){
+      this.dialogFormVisible = true;
+      this.dialogTitle = dialogTitle
+      this.resetDialogForm()
+      this.dialogForm = {...row}
+    },
+    closeDialog(){
+      this.dialogFormVisible = false;
     }
   },
   beforeRouteEnter(to, from, next) {
