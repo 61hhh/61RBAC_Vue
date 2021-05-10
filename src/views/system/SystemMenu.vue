@@ -67,7 +67,7 @@
         <el-table-column prop="icon" label="菜单图标" width="150" align="center"/>
         <el-table-column prop="menuSort" label="排序" width="50" align="center"/>
         <el-table-column prop="viewImport" label="前端路由组件Import路径" width="" align="center"/>
-        <el-table-column label="操作" width="90" fixed="right">
+        <el-table-column label="操作" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit" circle
                        @click="handleEdit(scope.$index, scope.row)"/>

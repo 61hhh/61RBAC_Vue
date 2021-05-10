@@ -55,7 +55,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="90" fixed="right">
+        <el-table-column label="操作" width="100" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit" circle
                        @click="handleEdit(scope.$index, scope.row)"/>

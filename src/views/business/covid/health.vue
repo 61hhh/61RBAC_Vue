@@ -198,7 +198,7 @@ export default {
       direction: 'rtl',
       queryMap: {
         pageNum: 1,
-        pageSize: 2
+        pageSize: 4
       },
       reported: false,
       historyTable: [],
