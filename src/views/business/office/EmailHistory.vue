@@ -39,7 +39,7 @@
         <el-table-column prop="title" label="标题" width="300" align="center"/>
         <el-table-column  label="内容" width="" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-message" @click="CheckMail(scope.$index, scope.row,'修改文章信息')">
+            <el-button type="primary" icon="el-icon-message" @click="CheckMail(scope.$index, scope.row,'查看邮件')">
               查看内容</el-button>
           </template>
         </el-table-column>
